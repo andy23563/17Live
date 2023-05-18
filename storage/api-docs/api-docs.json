@@ -1,0 +1,421 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Document",
+        "description": "",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://17live.php81.127.0.0.1.nip.io/",
+            "description": "local"
+        },
+        {
+            "url": "https://project-kirin-as-api-web-dev-06.azurewebsites.net",
+            "description": "dev"
+        },
+        {
+            "url": "https://project-kirin-as-api-web-prd-06.azurewebsites.net",
+            "description": "main"
+        }
+    ],
+    "paths": {
+        "/api/v1/comment/new": {
+            "post": {
+                "tags": [
+                    "留言"
+                ],
+                "summary": "新增留言",
+                "description": "新增留言",
+                "operationId": "d84dec9e7488e8912dc6380bcf1a3b25",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReqNewComments"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "操作失敗",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResPostsExists"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/posts/new": {
+            "post": {
+                "tags": [
+                    "文章"
+                ],
+                "summary": "新增文章",
+                "description": "新增文章",
+                "operationId": "5debedae20baadf83a0a5574893dec2f",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReqNewPosts"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResSuccessNewPosts"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "操作失敗",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResNewMessageFail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ResDefaultFail": {
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "操作失敗"
+                    }
+                },
+                "type": "object"
+            },
+            "ResDefault": {
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "OK"
+                    }
+                },
+                "type": "object"
+            },
+            "DocsErrorResponse": {
+                "title": "",
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "error message"
+                    }
+                },
+                "type": "object"
+            },
+            "DocsUsersLogin": {
+                "title": "",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "password": {
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "type": "object"
+            },
+            "DocsUsersRegister": {
+                "title": "",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "name": {
+                        "type": "string",
+                        "default": ""
+                    },
+                    "password": {
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "type": "object"
+            },
+            "ReqNewPosts": {
+                "title": "",
+                "required": [
+                    "title",
+                    "content"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "文章標題",
+                        "type": "string",
+                        "default": "Post Title"
+                    },
+                    "content": {
+                        "description": "文章內文",
+                        "type": "string",
+                        "default": "content"
+                    }
+                },
+                "type": "object"
+            },
+            "ReqNewComments": {
+                "title": "",
+                "required": [
+                    "pid",
+                    "messages"
+                ],
+                "properties": {
+                    "pid": {
+                        "description": "文章id",
+                        "type": "int",
+                        "default": 1
+                    },
+                    "messages": {
+                        "description": "文章留言",
+                        "type": "string",
+                        "default": "message"
+                    }
+                },
+                "type": "object"
+            },
+            "ResSuccess": {
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "success"
+                    }
+                },
+                "type": "object"
+            },
+            "ResSuccessNewPosts": {
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "success"
+                    },
+                    "pid": {
+                        "type": "int",
+                        "default": 1
+                    }
+                },
+                "type": "object"
+            },
+            "ResPostsExists": {
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "文章不存在"
+                    }
+                },
+                "type": "object"
+            },
+            "ResNewMessageFail": {
+                "properties": {
+                    "msg": {
+                        "type": "string",
+                        "default": "建立文章失敗"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "type": {
+                "name": "type",
+                "in": "query",
+                "description": "發票種類",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "default": "",
+                        "enum": [
+                            "電子發票",
+                            "雲端載具",
+                            "傳統發票"
+                        ]
+                    }
+                }
+            },
+            "status": {
+                "name": "status",
+                "in": "query",
+                "description": "發票狀態",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "登錄成功",
+                        "待審核",
+                        "登錄失敗"
+                    ]
+                }
+            },
+            "startDate": {
+                "name": "startDate",
+                "in": "query",
+                "description": "起始日期",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "endDate": {
+                "name": "endDate",
+                "in": "query",
+                "description": "結束日期",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "keyword": {
+                "name": "keyword",
+                "in": "query",
+                "description": "關鍵字",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "lotteryStatus": {
+                "name": "lotteryStatus",
+                "in": "query",
+                "description": "中獎狀態",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "已中獎",
+                        "未中獎"
+                    ]
+                }
+            },
+            "rewardId": {
+                "name": "rewardId",
+                "in": "query",
+                "description": "獎品Id",
+                "required": false,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "userId": {
+                "name": "userId",
+                "in": "path",
+                "description": "參與者id",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "invoiceId": {
+                "name": "invoiceId",
+                "in": "path",
+                "description": "發票id",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "statusId": {
+                "name": "statusId",
+                "in": "path",
+                "description": "發票狀態id",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "lotteryType": {
+                "name": "lotteryType",
+                "in": "path",
+                "description": "抽獎類型",
+                "required": true,
+                "schema": {
+                    "description": "1:發票登錄抽獎 2:序號抽獎",
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "lineToken": {
+                "name": "lineToken",
+                "in": "path",
+                "description": "參與者line token",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "limit": {
+                "name": "limit",
+                "in": "query",
+                "description": "每頁顯示資料",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "page": {
+                "name": "page",
+                "in": "query",
+                "description": "頁碼",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
