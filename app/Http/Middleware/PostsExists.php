@@ -39,7 +39,7 @@ class PostsExists extends Middleware
             return $next($request);
 
         } catch (Exception $e) {
-            return response()->json(['msg' => $e->getMessage()]);
+            return response()->json(['msg' => $e->getMessage()], 400);
         }
     }
 }
