@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\PostsException;
 use App\Services\PostService;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -41,6 +42,7 @@ class PostController extends Controller
      *
      * @param NewPostRequest $request
      * @return JsonResponse
+     * @throws PostsException
      */
     public function createPost(NewPostRequest $request): JsonResponse
     {
@@ -51,8 +53,8 @@ class PostController extends Controller
             $posts = $this->postService->createPost($title, $content);
 
             return response()->json(['msg' => 'success', 'pid' => $posts->id]);
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+        } catch (PostsException $e) {
+            throw new PostsException($e->getMessage(), $e->getCode());
         }
     }
 }

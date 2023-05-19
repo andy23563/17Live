@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CommentsException;
 use App\Http\Requests\NewCommentRequest;
 use App\Services\CommentService;
-use Exception;
 use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
@@ -41,6 +41,7 @@ class CommentController extends Controller
      *
      * @param NewCommentRequest $request
      * @return JsonResponse
+     * @throws CommentsException
      */
     public function createMessage(NewCommentRequest $request): JsonResponse
     {
@@ -51,8 +52,8 @@ class CommentController extends Controller
             $this->commentService->createComment($pid, $messages);
 
             return response()->json(['msg' => 'success']);
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+        } catch (CommentsException $e) {
+            throw new CommentsException($e->getMessage(), $e->getCode());
         }
     }
 }

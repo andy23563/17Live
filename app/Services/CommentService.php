@@ -4,8 +4,7 @@ namespace App\Services;
 
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
-use ErrorException;
-use Exception;
+use App\Exceptions\CommentsException;
 
 class CommentService
 {
@@ -18,11 +17,14 @@ class CommentService
      * @param int $pid
      * @param string $messages
      * @return void
-     * @throws ErrorException
-     * @throws Exception
+     * @throws CommentsException
      */
-    public function createComment(int $pid, string $messages) : void
+    public function createComment(int $pid, string $messages): void
     {
-        $this->commentRepository->createComment($pid, $messages);
+        try {
+            $this->commentRepository->createComment($pid, $messages);
+        } catch (CommentsException $e) {
+            throw new CommentsException($e->getMessage(), $e->getCode());
+        }
     }
 }

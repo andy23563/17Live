@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Comments;
-use ErrorException;
+use App\Exceptions\CommentsException;
 
 class CommentRepository
 {
@@ -11,7 +11,7 @@ class CommentRepository
      * @param int $pid
      * @param string $messages
      * @return Comments
-     * @throws ErrorException
+     * @throws CommentsException
      */
     public function createComment(int $pid, string $messages): Comments
     {
@@ -19,7 +19,7 @@ class CommentRepository
         $comments->pid = $pid;
         $comments->messages = $messages;
         if (!$comments->save()) {
-            throw new ErrorException('建立留言失敗');
+            throw new CommentsException('建立留言失敗', 409);
         }
 
         return $comments;

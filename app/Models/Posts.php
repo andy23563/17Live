@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
  *
  * @mixin Builder
 
+ * @property string $id 文章id
  * @property string $title 文章表頭
  * @property string $content 文章內文
  * @property Carbon|null $created_at
@@ -21,6 +22,7 @@ use Illuminate\Support\Carbon;
 class Posts extends model
 {
     use SoftDeletes;
+
     protected $table = 'posts';
 
     /**

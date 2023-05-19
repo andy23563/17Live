@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Posts;
-use ErrorException;
+use App\Exceptions\PostsException;
 
 class PostRepository
 {
@@ -12,7 +12,7 @@ class PostRepository
      * @param string $title
      * @param string $content
      * @return Posts
-     * @throws ErrorException
+     * @throws PostsException
      */
     public function createPost(string $title, string $content): Posts
     {
@@ -20,7 +20,7 @@ class PostRepository
         $posts->title = $title;
         $posts->content = $content;
         if (!$posts->save()) {
-            throw new ErrorException('建立文章失敗');
+            throw new PostsException('建立文章失敗', 409);
         }
 
         return $posts;

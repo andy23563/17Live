@@ -7,6 +7,7 @@ use Closure;
 use Exception;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use App\Exceptions\PostsException;
 
 class PostsExists extends Middleware
 {
@@ -24,22 +25,18 @@ class PostsExists extends Middleware
      * @param Closure $next
      * @param mixed ...$guards
      * @return mixed
+     * @throws PostsException
      */
     public function handle($request, Closure $next, ...$guards): mixed
     {
-        try {
-            $pid = $request->get('pid');
+        $pid = $request->get('pid');
 
-            $postExists = $this->postRepository->postExists($pid);
+        $postExists = $this->postRepository->postExists($pid);
 
-            if (!$postExists) {
-                throw new Exception("文章不存在");
-            }
-
-            return $next($request);
-
-        } catch (Exception $e) {
-            return response()->json(['msg' => $e->getMessage()], 400);
+        if (!$postExists) {
+            throw new PostsException("文章不存在", 409);
         }
+
+        return $next($request);
     }
 }
